@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>علي أبودهش | استشارات دوائية متخصصة</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:        #0a5c3b;
+  --green-mid:    #0d7a50;
+  --green-light:  #10a06a;
+  --accent:       #c9f0db;
+  --gold:         #c8973a;
+  --gold-light:   #f0c96e;
+  --dark:         #061a10;
+  --text:         #1a2e22;
+  --muted:        #5a7a67;
+  --bg:           #f5faf7;
+  --white:        #ffffff;
+  --card-bg:      #ffffff;
+  --border:       #d4e8db;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+html { scroll-behavior:smooth; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+/* ── NAVBAR ─────────────────────────────────────────── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  background: rgba(6,26,16,0.92);
+  backdrop-filter: blur(12px);
+  padding: 14px 5%;
+  display: flex; align-items:center; justify-content:space-between;
+  border-bottom: 1px solid rgba(201,240,219,0.1);
+}
+.nav-logo {
+  font-family: 'Amiri', serif;
+  font-size: 22px; color: var(--accent);
+  font-weight: 700; letter-spacing: 0.5px;
+}
+.nav-logo span { color: var(--gold-light); }
+.nav-links { display:flex; gap:28px; list-style:none; }
+.nav-links a {
+  color: rgba(255,255,255,0.75); text-decoration:none;
+  font-size:14px; font-weight:500; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold-light); }
+.nav-cta {
+  background: var(--gold); color: var(--dark);
+  padding: 9px 22px; border-radius: 8px;
+  font-size:14px; font-weight:700; text-decoration:none;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+/* ── HERO ────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #061a10 0%, #0a3020 45%, #0d5535 100%);
+  display: flex; align-items: center;
+  padding: 120px 5% 80px;
+  position: relative; overflow:hidden;
+}
+
+.hero::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; bottom:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(10,92,59,0.4) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(200,151,58,0.12) 0%, transparent 50%);
+  pointer-events:none;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 60px; align-items:center;
+  max-width: 1200px; margin: 0 auto; width:100%;
+  position:relative; z-index:1;
+}
+
+.hero-badge {
+  display: inline-flex; align-items:center; gap:8px;
+  background: rgba(201,240,219,0.1);
+  border: 1px solid rgba(201,240,219,0.25);
+  padding: 7px 16px; border-radius:50px;
+  font-size:13px; color:var(--accent);
+  margin-bottom: 24px;
+}
+.hero-badge::before { content:'💊'; font-size:14px; }
+
+.hero h1 {
+  font-family: 'Amiri', serif;
+  font-size: clamp(36px, 5vw, 62px);
+  color: #fff; line-height: 1.25;
+  margin-bottom: 20px;
+}
+.hero h1 em {
+  font-style:normal;
+  color: var(--gold-light);
+  display:block;
+}
+
+.hero-desc {
+  font-size: 17px; color: rgba(255,255,255,0.7);
+  line-height: 1.85; margin-bottom: 36px;
+  max-width: 520px;
+}
+
+.hero-stats {
+  display:flex; gap:32px; margin-bottom: 40px;
+}
+.stat { text-align:center; }
+.stat-num {
+  font-size: 28px; font-weight:700; color: var(--gold-light);
+  font-family:'Amiri',serif; line-height:1;
+}
+.stat-lbl { font-size:12px; color:rgba(255,255,255,0.5); margin-top:4px; }
+
+.hero-btns { display:flex; gap:14px; flex-wrap:wrap; }
+.btn-primary {
+  background: var(--gold); color: var(--dark);
+  padding:14px 32px; border-radius:10px;
+  font-size:16px; font-weight:700; text-decoration:none;
+  transition: all 0.2s;
+  display:inline-flex; align-items:center; gap:8px;
+}
+.btn-primary:hover { background:var(--gold-light); transform:translateY(-2px); }
+.btn-secondary {
+  background:transparent; color:#fff;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  padding:14px 28px; border-radius:10px;
+  font-size:15px; font-weight:500; text-decoration:none;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { border-color:var(--accent); color:var(--accent); }
+
+/* BOOKING CARD */
+.hero-booking-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.35), 0 4px 20px rgba(10,92,59,0.2);
+  position:relative;
+}
+.hero-booking-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:5px;
+  background: linear-gradient(90deg, var(--green), var(--gold));
+  border-radius: 20px 20px 0 0;
+}
+.card-title {
+  font-size:18px; font-weight:700; color:var(--dark);
+  margin-bottom:6px; text-align:center;
+}
+.card-subtitle {
+  font-size:13px; color:var(--muted);
+  text-align:center; margin-bottom:24px;
+}
+.price-banner {
+  background: linear-gradient(135deg, var(--green), var(--green-mid));
+  border-radius:12px; padding:16px;
+  text-align:center; margin-bottom:22px;
+  color:#fff;
+}
+.price-banner .amount {
+  font-size:38px; font-weight:900; line-height:1;
+  font-family:'Amiri',serif;
+}
+.price-banner .currency { font-size:16px; font-weight:500; opacity:0.85; }
+.price-banner .duration { font-size:13px; opacity:0.75; margin-top:4px; }
+
+.booking-form { display:flex; flex-direction:column; gap:12px; }
+.booking-form label { font-size:12px; color:var(--muted); font-weight:600; margin-bottom:3px; display:block; }
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  font-family:'Cairo',sans-serif;
+  font-size:14px; direction:rtl;
+  border:1.5px solid var(--border);
+  border-radius:9px; padding:10px 14px;
+  width:100%; background:#fafcfb; color:var(--text);
+  outline:none; transition: border-color 0.2s;
+}
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus { border-color:var(--green-mid); }
+.booking-form textarea { height:80px; resize:none; }
+.submit-btn {
+  width:100%; padding:14px;
+  background: linear-gradient(135deg, var(--green), var(--green-mid));
+  color:#fff; border:none; border-radius:10px;
+  font-family:'Cairo',sans-serif; font-size:16px; font-weight:700;
+  cursor:pointer; transition: all 0.2s; margin-top:4px;
+}
+.submit-btn:hover { transform:translateY(-1px); filter:brightness(1.08); }
+
+.secure-note {
+  text-align:center; font-size:11px; color:var(--muted);
+  margin-top:10px; display:flex; align-items:center; justify-content:center; gap:5px;
+}
+
+/* ── SECTION WRAPPER ─────────────────────────────────── */
+section { padding: 90px 5%; }
+.section-label {
+  font-size:12px; font-weight:700; color:var(--green-mid);
+  letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:12px;
+}
+.section-title {
+  font-family:'Amiri',serif;
+  font-size:clamp(28px,4vw,44px);
+  color:var(--dark); line-height:1.3;
+  margin-bottom:16px;
+}
+.section-desc { font-size:16px; color:var(--muted); line-height:1.8; max-width:560px; }
+.centered { text-align:center; }
+.centered .section-desc { margin:0 auto; }
+
+/* ── SERVICES ─────────────────────────────────────────── */
+#services { background: var(--white); }
+.services-grid {
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:24px; margin-top:48px;
+}
+.service-card {
+  background: var(--bg);
+  border:1px solid var(--border);
+  border-radius:16px; padding:28px 24px;
+  transition: all 0.25s;
+  position:relative; overflow:hidden;
+}
+.service-card::after {
+  content:'';
+  position:absolute; bottom:0; left:0; right:0; height:3px;
+  background: linear-gradient(90deg, var(--green), var(--gold));
+  transform:scaleX(0); transition: transform 0.3s;
+}
+.service-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(10,92,59,0.12); }
+.service-card:hover::after { transform:scaleX(1); }
+.service-icon { font-size:36px; margin-bottom:16px; display:block; }
+.service-card h3 { font-size:17px; font-weight:700; color:var(--dark); margin-bottom:8px; }
+.service-card p { font-size:14px; color:var(--muted); line-height:1.7; }
+
+/* ── HOW IT WORKS ─────────────────────────────────────── */
+#how { background:var(--bg); }
+.steps-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:0; margin-top:52px; position:relative;
+}
+.steps-grid::before {
+  content:'';
+  position:absolute; top:32px; right:12.5%; left:12.5%;
+  height:2px; background: linear-gradient(90deg, var(--green), var(--gold));
+  z-index:0;
+}
+.step { text-align:center; padding:0 16px; position:relative; z-index:1; }
+.step-num {
+  width:64px; height:64px; border-radius:50%;
+  background: linear-gradient(135deg, var(--green), var(--green-mid));
+  color:#fff; font-size:22px; font-weight:900;
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 20px; font-family:'Amiri',serif;
+  box-shadow: 0 4px 20px rgba(10,92,59,0.3);
+}
+.step h3 { font-size:15px; font-weight:700; color:var(--dark); margin-bottom:8px; }
+.step p { font-size:13px; color:var(--muted); line-height:1.7; }
+
+/* ── ABOUT ────────────────────────────────────────────── */
+#about { background:var(--white); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+.about-img {
+  background: linear-gradient(135deg, var(--green) 0%, var(--dark) 100%);
+  border-radius:20px; aspect-ratio:1;
+  display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+}
+.about-img-inner { font-size:120px; opacity:0.25; }
+.about-img-text {
+  position:absolute; bottom:28px; right:28px;
+  background:rgba(255,255,255,0.95); border-radius:12px;
+  padding:14px 18px; text-align:right;
+}
+.about-img-text .num { font-size:26px; font-weight:900; color:var(--green); font-family:'Amiri',serif; }
+.about-img-text .lbl { font-size:11px; color:var(--muted); }
+.about-text .section-desc { max-width:100%; }
+.creds { display:flex; flex-direction:column; gap:14px; margin-top:28px; }
+.cred-item {
+  display:flex; align-items:center; gap:14px;
+  background:var(--bg); border:1px solid var(--border);
+  border-radius:10px; padding:14px 16px;
+}
+.cred-icon { font-size:22px; flex-shrink:0; }
+.cred-text { font-size:14px; color:var(--text); font-weight:500; }
+.cred-text span { display:block; font-size:12px; color:var(--muted); font-weight:400; margin-top:2px; }
+
+/* ── TESTIMONIALS ─────────────────────────────────────── */
+#testimonials { background:var(--bg); }
+.test-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:48px; }
+.test-card {
+  background:var(--white); border:1px solid var(--border);
+  border-radius:16px; padding:24px;
+}
+.stars { color:var(--gold); font-size:16px; margin-bottom:12px; }
+.test-text { font-size:14px; color:var(--text); line-height:1.8; margin-bottom:16px; font-style:italic; }
+.test-author { display:flex; align-items:center; gap:10px; }
+.test-avatar {
+  width:40px; height:40px; border-radius:50%;
+  background: linear-gradient(135deg, var(--green), var(--green-mid));
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:16px; font-weight:700; flex-shrink:0;
+}
+.test-name { font-size:14px; font-weight:700; color:var(--dark); }
+.test-city { font-size:12px; color:var(--muted); }
+
+/* ── PRICING ──────────────────────────────────────────── */
+#pricing { background:var(--white); }
+.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:52px; }
+.pricing-card {
+  border:1.5px solid var(--border); border-radius:20px;
+  padding:32px 28px; position:relative; transition:all 0.25s;
+}
+.pricing-card.featured {
+  background: linear-gradient(160deg, var(--green) 0%, var(--dark) 100%);
+  border-color:var(--green); color:#fff;
+  transform:scale(1.04);
+  box-shadow: 0 16px 60px rgba(10,92,59,0.3);
+}
+.featured-badge {
+  position:absolute; top:-14px; right:50%; transform:translateX(50%);
+  background:var(--gold); color:var(--dark);
+  font-size:12px; font-weight:700; padding:5px 16px; border-radius:20px;
+}
+.plan-name { font-size:14px; font-weight:700; color:var(--muted); margin-bottom:16px; }
+.pricing-card.featured .plan-name { color:rgba(255,255,255,0.7); }
+.plan-price { font-family:'Amiri',serif; font-size:48px; font-weight:700; color:var(--dark); line-height:1; }
+.pricing-card.featured .plan-price { color:#fff; }
+.plan-price sub { font-size:16px; font-weight:400; font-family:'Cairo',sans-serif; }
+.plan-period { font-size:13px; color:var(--muted); margin-bottom:24px; }
+.pricing-card.featured .plan-period { color:rgba(255,255,255,0.6); }
+.plan-features { list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+.plan-features li { font-size:14px; display:flex; align-items:center; gap:8px; }
+.plan-features li::before { content:'✓'; color:var(--green-light); font-weight:700; flex-shrink:0; }
+.pricing-card.featured .plan-features li::before { color:var(--gold-light); }
+.pricing-card.featured .plan-features li { color:rgba(255,255,255,0.85); }
+.plan-btn {
+  width:100%; padding:12px; border-radius:10px;
+  font-family:'Cairo',sans-serif; font-size:15px; font-weight:700;
+  cursor:pointer; transition:all 0.2s; text-decoration:none; display:block; text-align:center;
+  border: 1.5px solid var(--green);
+  background:transparent; color:var(--green);
+}
+.plan-btn:hover { background:var(--green); color:#fff; }
+.pricing-card.featured .plan-btn {
+  background:var(--gold); color:var(--dark); border-color:var(--gold);
+}
+.pricing-card.featured .plan-btn:hover { background:var(--gold-light); }
+
+/* ── FAQ ──────────────────────────────────────────────── */
+#faq { background:var(--bg); }
+.faq-list { max-width:760px; margin:48px auto 0; display:flex; flex-direction:column; gap:12px; }
+.faq-item {
+  background:var(--white); border:1px solid var(--border);
+  border-radius:12px; overflow:hidden;
+}
+.faq-q {
+  padding:18px 22px; font-size:15px; font-weight:600; color:var(--dark);
+  cursor:pointer; display:flex; align-items:center; justify-content:space-between;
+  user-select:none;
+}
+.faq-q::after { content:'+'; font-size:20px; color:var(--green-mid); font-weight:300; flex-shrink:0; }
+.faq-item.open .faq-q::after { content:'−'; }
+.faq-a {
+  display:none; padding:0 22px 18px;
+  font-size:14px; color:var(--muted); line-height:1.8;
+}
+.faq-item.open .faq-a { display:block; }
+
+/* ── BOOKING SECTION ──────────────────────────────────── */
+#booking { background: linear-gradient(160deg, var(--dark) 0%, var(--green) 100%); }
+#booking .section-title { color:#fff; }
+#booking .section-desc { color:rgba(255,255,255,0.7); }
+#booking .section-label { color:var(--gold-light); }
+.booking-full {
+  max-width: 680px; margin: 48px auto 0;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:20px; padding:40px;
+}
+.booking-full .booking-form input,
+.booking-full .booking-form select,
+.booking-full .booking-form textarea {
+  background:rgba(255,255,255,0.08);
+  border-color:rgba(255,255,255,0.2);
+  color:#fff;
+}
+.booking-full .booking-form input::placeholder,
+.booking-full .booking-form textarea::placeholder { color:rgba(255,255,255,0.4); }
+.booking-full .booking-form label { color:rgba(255,255,255,0.7); }
+.booking-full .submit-btn { background:var(--gold); color:var(--dark); }
+.booking-full .secure-note { color:rgba(255,255,255,0.4); }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+/* ── FOOTER ───────────────────────────────────────────── */
+footer {
+  background:var(--dark); color:rgba(255,255,255,0.6);
+  padding:48px 5% 28px;
+}
+.footer-grid {
+  display:grid; grid-template-columns:2fr 1fr 1fr;
+  gap:48px; margin-bottom:40px;
+}
+.footer-brand .nav-logo { font-size:20px; margin-bottom:12px; display:block; }
+.footer-desc { font-size:13px; line-height:1.8; }
+.footer-col h4 { font-size:14px; font-weight:700; color:#fff; margin-bottom:16px; }
+.footer-col ul { list-style:none; display:flex; flex-direction:column; gap:9px; }
+.footer-col ul li a { color:rgba(255,255,255,0.5); text-decoration:none; font-size:13px; transition:color 0.2s; }
+.footer-col ul li a:hover { color:var(--gold-light); }
+.footer-bottom {
+  border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:12px;
+}
+.social-links { display:flex; gap:12px; }
+.social-link {
+  width:34px; height:34px; border-radius:8px;
+  background:rgba(255,255,255,0.08);
+  display:flex; align-items:center; justify-content:center;
+  color:rgba(255,255,255,0.6); text-decoration:none; font-size:16px;
+  transition:all 0.2s;
+}
+.social-link:hover { background:var(--green-mid); color:#fff; }
+
+/* ── SUCCESS MODAL ────────────────────────────────────── */
+.modal-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.6); z-index:1000;
+  align-items:center; justify-content:center;
+}
+.modal-overlay.open { display:flex; }
+.modal {
+  background:#fff; border-radius:20px; padding:40px;
+  max-width:440px; width:90%; text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,0.3);
+}
+.modal-icon { font-size:64px; margin-bottom:16px; }
+.modal h3 { font-size:22px; font-weight:700; color:var(--dark); margin-bottom:10px; }
+.modal p { font-size:14px; color:var(--muted); line-height:1.7; margin-bottom:24px; }
+.modal-close {
+  width:100%; padding:12px;
+  background:var(--green); color:#fff; border:none;
+  border-radius:10px; font-family:'Cairo',sans-serif;
+  font-size:15px; font-weight:700; cursor:pointer;
+}
+
+/* ── ANIMATIONS ───────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.hero-content > * {
+  animation: fadeUp 0.7s ease both;
+}
+.hero-content > *:nth-child(1) { animation-delay:0.1s; }
+.hero-content > *:nth-child(2) { animation-delay:0.2s; }
+.hero-content > *:nth-child(3) { animation-delay:0.3s; }
+.hero-content > *:nth-child(4) { animation-delay:0.4s; }
+.hero-content > *:nth-child(5) { animation-delay:0.5s; }
+.hero-booking-card { animation:fadeUp 0.7s 0.3s ease both; }
+
+/* ── RESPONSIVE ───────────────────────────────────────── */
+@media(max-width:900px) {
+  .hero-grid { grid-template-columns:1fr; }
+  .hero-booking-card { max-width:480px; margin:0 auto; }
+  .services-grid,.test-grid,.pricing-grid { grid-template-columns:1fr; }
+  .steps-grid { grid-template-columns:1fr 1fr; }
+  .steps-grid::before { display:none; }
+  .about-grid { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr; gap:28px; }
+  .nav-links { display:none; }
+  .pricing-card.featured { transform:none; }
+  .form-row { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">علي <span>أبودهش</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">الخدمات</a></li>
+    <li><a href="#about">من أنا</a></li>
+    <li><a href="#pricing">التسعيرة</a></li>
+    <li><a href="#faq">الأسئلة الشائعة</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta">احجز استشارتك</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-badge">صيدلي أول معتمد · خدمة عن بُعد</div>
+      <h1>
+        استشارتك الدوائية
+        <em>في نصف ساعة</em>
+        مع متخصص موثوق
+      </h1>
+      <p class="hero-desc">
+        أجب على تساؤلاتك الدوائية، اعرف تفاعلات الأدوية، وتحقق من صحة وصفتك الطبية
+        مع صيدلي أول معتمد — من راحة بيتك وفي وقتك المناسب.
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">+٣٠٠</div><div class="stat-lbl">مريض خدمتهم</div></div>
+        <div class="stat"><div class="stat-num">٤.٩</div><div class="stat-lbl">تقييم المرضى</div></div>
+        <div class="stat"><div class="stat-num">٣٠</div><div class="stat-lbl">دقيقة مخصصة لك</div></div>
+      </div>
+      <div class="hero-btns">
+        <a href="#booking" class="btn-primary">📅 احجز الآن</a>
+        <a href="#services" class="btn-secondary">اعرف المزيد</a>
+      </div>
+    </div>
+
+    <div class="hero-booking-card">
+      <div class="card-title">احجز استشارتك الآن</div>
+      <div class="card-subtitle">نصف ساعة مع صيدلي أول — عن بُعد</div>
+      <div class="price-banner">
+        <div class="amount">١٥٠ <span class="currency">ريال</span></div>
+        <div class="duration">جلسة ٣٠ دقيقة · فيديو أو صوت</div>
+      </div>
+      <form class="booking-form" onsubmit="submitBooking(event)">
+        <div>
+          <label>الاسم الكامل</label>
+          <input type="text" id="name" placeholder="أدخل اسمك الكامل" required>
+        </div>
+        <div>
+          <label>رقم الجوال</label>
+          <input type="tel" id="phone" placeholder="+966 5X XXX XXXX" required>
+        </div>
+        <div>
+          <label>موضوع الاستشارة</label>
+          <select id="topic" required>
+            <option value="">اختر الموضوع...</option>
+            <option>مراجعة الوصفة الطبية</option>
+            <option>تفاعلات الأدوية</option>
+            <option>الأمراض المزمنة</option>
+            <option>أدوية الأطفال</option>
+            <option>المكملات الغذائية</option>
+            <option>أخرى</option>
+          </select>
+        </div>
+        <div>
+          <label>الوقت المفضل</label>
+          <input type="datetime-local" id="datetime" required>
+        </div>
+        <button type="submit" class="submit-btn">احجز الاستشارة ← </button>
+      </form>
+      <div class="secure-note">🔒 معلوماتك محفوظة وسرية تماماً</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="centered">
+      <div class="section-label">خدماتنا</div>
+      <h2 class="section-title">ماذا تحصل في الاستشارة؟</h2>
+      <p class="section-desc">كل ما يخص أدويتك وصحتك في جلسة واحدة متكاملة مع صيدلي أول</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">📋</span>
+        <h3>مراجعة الوصفة الطبية</h3>
+        <p>فحص الوصفة الطبية كاملة، التحقق من الجرعات، مراجعة التعليمات، والتأكد من ملاءمتها لحالتك الصحية.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">⚗️</span>
+        <h3>تفاعلات الأدوية</h3>
+        <p>الكشف عن التفاعلات الدوائية الخطرة بين الأدوية التي تتناولها ومنع المضاعفات قبل حدوثها.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">💊</span>
+        <h3>إدارة الأمراض المزمنة</h3>
+        <p>متابعة أدوية السكري والضغط والقلب والغدة الدرقية وتحسين الالتزام العلاجي لنتائج أفضل.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">👶</span>
+        <h3>أدوية الأطفال والرضع</h3>
+        <p>الجرعات الصحيحة حسب وزن الطفل وعمره، والأدوية الآمنة خلال الرضاعة والحمل.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🌿</span>
+        <h3>المكملات الغذائية</h3>
+        <p>تقييم الفيتامينات والمعادن والمكملات التي تتناولها ومدى احتياجك الفعلي لها.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🔄</span>
+        <h3>الأدوية البديلة</h3>
+        <p>إيجاد البدائل المتاحة في السوق بنفس الفاعلية وبسعر أوفر عند عدم توفر الدواء الأصلي.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="centered">
+      <div class="section-label">كيف تعمل الخدمة</div>
+      <h2 class="section-title">٤ خطوات بسيطة</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">١</div>
+        <h3>احجز موعدك</h3>
+        <p>اختر الوقت المناسب لك وادفع رسوم الاستشارة بأمان</p>
+      </div>
+      <div class="step">
+        <div class="step-num">٢</div>
+        <h3>أرسل ملفاتك</h3>
+        <p>أرفق وصفتك الطبية أو قائمة أدويتك مسبقاً للاستعداد</p>
+      </div>
+      <div class="step">
+        <div class="step-num">٣</div>
+        <h3>الجلسة المباشرة</h3>
+        <p>اتصال فيديو أو صوت لمدة ٣٠ دقيقة كاملة مخصصة لك</p>
+      </div>
+      <div class="step">
+        <div class="step-num">٤</div>
+        <h3>ملخص كتابي</h3>
+        <p>تستلم ملخصاً مكتوباً بعد الجلسة يمكنك الرجوع إليه دائماً</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="about-grid">
+      <div class="about-img">
+        <div class="about-img-inner">💊</div>
+        <div class="about-img-text">
+          <div class="num">صيدلي أول</div>
+          <div class="lbl">علي أبودهش · معتمد</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="section-label">من أنا</div>
+        <h2 class="section-title">خبرة موثوقة في خدمتك</h2>
+        <p class="section-desc">
+          صيدلي أول معتمد بخبرة متخصصة في الرعاية الدوائية وإدارة الأمراض المزمنة.
+          أؤمن بأن كل مريض يستحق فهم أدويته كاملاً وليس مجرد تناولها.
+        </p>
+        <div class="creds">
+          <div class="cred-item">
+            <span class="cred-icon">🎓</span>
+            <div class="cred-text">مؤهل علمي في الصيدلة السريرية<span>بكالوريوس صيدلة مع تخصص دقيق</span></div>
+          </div>
+          <div class="cred-item">
+            <span class="cred-icon">🏥</span>
+            <div class="cred-text">خبرة ميدانية في بيئات صيدلانية متعددة<span>مستشفيات وصيدليات مجتمعية</span></div>
+          </div>
+          <div class="cred-item">
+            <span class="cred-icon">📜</span>
+            <div class="cred-text">مرخص من هيئة التخصصات الصحية كصيدلي اكلينيكي</div>
+          </div>
+          <div class="cred-item">
+            <span class="cred-icon">🌐</span>
+            <div class="cred-text">خدمة عن بُعد لجميع مناطق المملكة<span>متاح طوال أيام الأسبوع</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="centered">
+      <div class="section-label">آراء المرضى</div>
+      <h2 class="section-title">ماذا قالوا عن التجربة؟</h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p class="test-text">"اكتشفت تفاعلاً خطيراً بين دوائين كنت آخذهم معاً من سنوات! الاستشارة كانت تستحق كل ريال وأكثر."</p>
+        <div class="test-author">
+          <div class="test-avatar">أ</div>
+          <div><div class="test-name">أم عبدالله</div><div class="test-city">الرياض</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p class="test-text">"شرح لي الدكتور كيف آخذ أدوية الضغط والسكر بالطريقة الصحيحة. صراحة ما كنت أعرف إن الوقت مهم جداً!"</p>
+        <div class="test-author">
+          <div class="test-avatar">م</div>
+          <div><div class="test-name">محمد الغامدي</div><div class="test-city">جدة</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p class="test-text">"سألت عن دواء لطفلي الرضيع وكانت الإجابة دقيقة وسريعة. يستحق الثقة الكاملة والخدمة ممتازة."</p>
+        <div class="test-author">
+          <div class="test-avatar">ن</div>
+          <div><div class="test-name">نورة السبيعي</div><div class="test-city">الدمام</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div style="max-width:1000px;margin:0 auto">
+    <div class="centered">
+      <div class="section-label">التسعيرة</div>
+      <h2 class="section-title">اختر ما يناسبك</h2>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan-name">استشارة واحدة</div>
+        <div class="plan-price">١٥٠<sub> ريال</sub></div>
+        <div class="plan-period">جلسة ٣٠ دقيقة</div>
+        <ul class="plan-features">
+          <li>مراجعة الوصفة الطبية</li>
+          <li>إجابة على أسئلتك</li>
+          <li>ملخص كتابي بعد الجلسة</li>
+          <li>متابعة لمدة ٢٤ ساعة</li>
+        </ul>
+        <a href="#booking" class="plan-btn">احجز الآن</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="featured-badge">⭐ الأكثر طلباً</div>
+        <div class="plan-name">باقة الشهرية</div>
+        <div class="plan-price">٣٩٩<sub> ريال</sub></div>
+        <div class="plan-period">٣ جلسات شهرياً — وفّر ٥١ ريالاً</div>
+        <ul class="plan-features">
+          <li>٣ جلسات ٣٠ دقيقة</li>
+          <li>أولوية في الحجز</li>
+          <li>ملخص بعد كل جلسة</li>
+          <li>متابعة فورية عبر واتساب</li>
+          <li>خصم ١٠٪ على الجلسات الإضافية</li>
+        </ul>
+        <a href="#booking" class="plan-btn">ابدأ الآن</a>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">باقة متابعة مزمن</div>
+        <div class="plan-price">٦٩٩<sub> ريال</sub></div>
+        <div class="plan-period">٦ جلسات شهرياً</div>
+        <ul class="plan-features">
+          <li>٦ جلسات متخصصة</li>
+          <li>خطة علاجية دوائية</li>
+          <li>متابعة أسبوعية عبر واتساب</li>
+          <li>مراجعة التحاليل والنتائج</li>
+          <li>تقرير شهري شامل</li>
+        </ul>
+        <a href="#booking" class="plan-btn">احجز الآن</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div style="max-width:860px;margin:0 auto">
+    <div class="centered">
+      <div class="section-label">أسئلة شائعة</div>
+      <h2 class="section-title">ما الذي يسألني الناس؟</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">هل الاستشارة الدوائية تغني عن زيارة الطبيب؟</div>
+        <div class="faq-a">لا، الاستشارة الدوائية تكمّل دور الطبيب ولا تغني عنه. أنا متخصص في الأدوية وجرعاتها وتفاعلاتها، أما التشخيص والعلاج فهو اختصاص الطبيب. نعمل معاً في خدمتك.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">كيف يتم الدفع؟</div>
+        <div class="faq-a">يتم الدفع قبل الجلسة عبر تحويل بنكي، مدى، أو Apple Pay. ستستلم رسالة تأكيد فور الدفع مع رابط الاجتماع.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">ماذا أحضّر قبل الاستشارة؟</div>
+        <div class="faq-a">صوّر وصفتك الطبية أو اكتب أسماء أدويتك، وأي تحاليل حديثة إن وجدت. وجهّز أسئلتك مسبقاً لأستفيد من الوقت معك.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">هل الخدمة متاحة لجميع مناطق السعودية؟</div>
+        <div class="faq-a">نعم! الخدمة عن بُعد بالكامل عبر الفيديو أو الصوت، متاحة لأي مكان في المملكة وخارجها أيضاً.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">هل يمكن إلغاء أو تأجيل الحجز؟</div>
+        <div class="faq-a">نعم، يمكن إلغاء الحجز وإعادة المبلغ كاملاً إذا تم الإلغاء قبل ٢٤ ساعة من موعد الجلسة. للتأجيل لا يوجد رسوم في أي وقت.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING FULL -->
+<section id="booking">
+  <div style="max-width:1000px;margin:0 auto;text-align:center">
+    <div class="section-label">احجز موعدك</div>
+    <h2 class="section-title">ابدأ رحلتك الدوائية الصحيحة</h2>
+    <p class="section-desc" style="margin:0 auto 0">خصص ٣٠ دقيقة لصحتك — وأنت في راحة بيتك</p>
+    <div class="booking-full">
+      <form class="booking-form" onsubmit="submitBooking(event)">
+        <div class="form-row">
+          <div><label>الاسم الكامل *</label><input type="text" placeholder="أدخل اسمك" required></div>
+          <div><label>رقم الجوال *</label><input type="tel" placeholder="+966 5X XXX XXXX" required></div>
+        </div>
+        <div class="form-row">
+          <div><label>البريد الإلكتروني</label><input type="email" placeholder="your@email.com"></div>
+          <div><label>نوع الباقة *</label>
+            <select required>
+              <option value="">اختر الباقة...</option>
+              <option>استشارة واحدة - ١٥٠ ريال</option>
+              <option>باقة شهرية (٣ جلسات) - ٣٩٩ ريال</option>
+              <option>باقة متابعة مزمن (٦ جلسات) - ٦٩٩ ريال</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div><label>موضوع الاستشارة *</label>
+            <select required>
+              <option value="">اختر الموضوع...</option>
+              <option>مراجعة الوصفة الطبية</option>
+              <option>تفاعلات الأدوية</option>
+              <option>الأمراض المزمنة (سكري، ضغط...)</option>
+              <option>أدوية الأطفال والرضع</option>
+              <option>الحمل والرضاعة</option>
+              <option>المكملات الغذائية</option>
+              <option>أخرى</option>
+            </select>
+          </div>
+          <div><label>الوقت المفضل *</label><input type="datetime-local" required></div>
+        </div>
+        <div><label>ملاحظات إضافية</label><textarea placeholder="اكتب هنا أي تفاصيل تساعد في تحضير استشارتك..."></textarea></div>
+        <button type="submit" class="submit-btn">تأكيد الحجز وإتمام الدفع →</button>
+      </form>
+      <div class="secure-note">🔒 بياناتك محمية وسرية · الدفع آمن بالكامل</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">علي <span>أبودهش</span></span>
+      <p class="footer-desc">خدمات استشارات دوائية متخصصة عن بُعد، للأفراد والعائلات في جميع أنحاء المملكة العربية السعودية.</p>
+    </div>
+    <div class="footer-col">
+      <h4>روابط سريعة</h4>
+      <ul>
+        <li><a href="#services">الخدمات</a></li>
+        <li><a href="#about">من أنا</a></li>
+        <li><a href="#pricing">التسعيرة</a></li>
+        <li><a href="#testimonials">آراء المرضى</a></li>
+        <li><a href="#faq">الأسئلة الشائعة</a></li>
+        <li><a href="#booking">احجز الآن</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>تواصل معنا</h4>
+      <ul>
+        <li><a href="https://wa.me/966XXXXXXXXX">واتساب</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#26474a4f6647444942474e43554e085547">البريد الإلكتروني</a></li>
+        <li><a href="#">تويتر / X</a></li>
+        <li><a href="#">إنستغرام</a></li>
+        <li><a href="#">سناب شات</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© ٢٠٢٦ علي أبودهش · جميع الحقوق محفوظة</span>
+    <div class="social-links">
+      <a href="#" class="social-link">𝕏</a>
+      <a href="#" class="social-link">📸</a>
+      <a href="#" class="social-link">💬</a>
+    </div>
+  </div>
+</footer>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="modal-icon">✅</div>
+    <h3>تم الحجز بنجاح!</h3>
+    <p>سيتواصل معك علي أبودهش خلال ساعتين لتأكيد الموعد وإرسال رابط الجلسة ومعلومات الدفع.</p>
+    <button class="modal-close" onclick="document.getElementById('successModal').classList.remove('open')">حسناً، شكراً!</button>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function submitBooking(e) {
+  e.preventDefault();
+  document.getElementById('successModal').classList.add('open');
+}
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+// Set min datetime to now
+document.querySelectorAll('input[type="datetime-local"]').forEach(inp => {
+  const now = 
