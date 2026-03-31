@@ -541,18 +541,18 @@ footer {
         <div class="amount">١٥٠ <span class="currency">ريال</span></div>
         <div class="duration">جلسة ٣٠ دقيقة · فيديو أو صوت</div>
       </div>
-      <form class="booking-form" onsubmit="submitBooking(event)">
+      <form class="booking-form" id="heroForm" onsubmit="submitBooking(event,'heroForm')">
         <div>
           <label>الاسم الكامل</label>
-          <input type="text" id="name" placeholder="أدخل اسمك الكامل" required>
+          <input type="text" id="h_name" placeholder="أدخل اسمك الكامل" required>
         </div>
         <div>
           <label>رقم الجوال</label>
-          <input type="tel" id="phone" placeholder="+966 5X XXX XXXX" required>
+          <input type="tel" id="h_phone" placeholder="+966 5X XXX XXXX" required>
         </div>
         <div>
           <label>موضوع الاستشارة</label>
-          <select id="topic" required>
+          <select id="h_topic" required>
             <option value="">اختر الموضوع...</option>
             <option>مراجعة الوصفة الطبية</option>
             <option>تفاعلات الأدوية</option>
@@ -564,9 +564,9 @@ footer {
         </div>
         <div>
           <label>الوقت المفضل</label>
-          <input type="datetime-local" id="datetime" required>
+          <input type="datetime-local" id="h_datetime" required>
         </div>
-        <button type="submit" class="submit-btn">احجز الاستشارة ← </button>
+        <button type="submit" class="submit-btn" id="heroSubmitBtn">احجز الاستشارة ←</button>
       </form>
       <div class="secure-note">🔒 معلوماتك محفوظة وسرية تماماً</div>
     </div>
@@ -815,25 +815,25 @@ footer {
     <h2 class="section-title">ابدأ رحلتك الدوائية الصحيحة</h2>
     <p class="section-desc" style="margin:0 auto 0">خصص ٣٠ دقيقة لصحتك — وأنت في راحة بيتك</p>
     <div class="booking-full">
-      <form class="booking-form" onsubmit="submitBooking(event)">
+      <form class="booking-form" id="mainForm" onsubmit="submitBooking(event,'mainForm')">
         <div class="form-row">
-          <div><label>الاسم الكامل *</label><input type="text" placeholder="أدخل اسمك" required></div>
-          <div><label>رقم الجوال *</label><input type="tel" placeholder="+966 5X XXX XXXX" required></div>
+          <div><label>الاسم الكامل *</label><input type="text" id="m_name" placeholder="أدخل اسمك" required></div>
+          <div><label>رقم الجوال *</label><input type="tel" id="m_phone" placeholder="+966 5X XXX XXXX" required></div>
         </div>
         <div class="form-row">
-          <div><label>البريد الإلكتروني</label><input type="email" placeholder="your@email.com"></div>
+          <div><label>البريد الإلكتروني *</label><input type="email" id="m_email" placeholder="your@email.com" required></div>
           <div><label>نوع الباقة *</label>
-            <select required>
+            <select id="m_package" required>
               <option value="">اختر الباقة...</option>
-              <option>استشارة واحدة - ١٥٠ ريال</option>
-              <option>باقة شهرية (٣ جلسات) - ٣٩٩ ريال</option>
-              <option>باقة متابعة مزمن (٦ جلسات) - ٦٩٩ ريال</option>
+              <option value="150">استشارة واحدة - ١٥٠ ريال</option>
+              <option value="399">باقة شهرية (٣ جلسات) - ٣٩٩ ريال</option>
+              <option value="699">باقة متابعة مزمن (٦ جلسات) - ٦٩٩ ريال</option>
             </select>
           </div>
         </div>
         <div class="form-row">
           <div><label>موضوع الاستشارة *</label>
-            <select required>
+            <select id="m_topic" required>
               <option value="">اختر الموضوع...</option>
               <option>مراجعة الوصفة الطبية</option>
               <option>تفاعلات الأدوية</option>
@@ -844,10 +844,10 @@ footer {
               <option>أخرى</option>
             </select>
           </div>
-          <div><label>الوقت المفضل *</label><input type="datetime-local" required></div>
+          <div><label>الوقت المفضل *</label><input type="datetime-local" id="m_datetime" required></div>
         </div>
-        <div><label>ملاحظات إضافية</label><textarea placeholder="اكتب هنا أي تفاصيل تساعد في تحضير استشارتك..."></textarea></div>
-        <button type="submit" class="submit-btn">تأكيد الحجز وإتمام الدفع →</button>
+        <div><label>ملاحظات إضافية</label><textarea id="m_notes" placeholder="اكتب هنا أي تفاصيل تساعد في تحضير استشارتك..."></textarea></div>
+        <button type="submit" class="submit-btn" id="mainSubmitBtn">تأكيد الحجز والانتقال للدفع →</button>
       </form>
       <div class="secure-note">🔒 بياناتك محمية وسرية · الدفع آمن بالكامل</div>
     </div>
@@ -893,25 +893,250 @@ footer {
   </div>
 </footer>
 
+<!-- PAYMENT MODAL — STC Pay / IBAN يدوي -->
+<div class="modal-overlay" id="paymentModal">
+  <div class="modal" style="max-width:480px;text-align:right">
+    <div class="modal-icon">💳</div>
+    <h3 id="payModalTitle" style="margin-bottom:6px">تفاصيل الدفع</h3>
+    <p id="payModalDesc" style="margin-bottom:20px;font-size:13px;color:#5a7a67"></p>
+
+    <!-- STC Pay -->
+    <div style="background:#f0f7f4;border:1.5px solid #c8e6d9;border-radius:12px;padding:16px 18px;margin-bottom:12px">
+      <div style="font-size:13px;font-weight:700;color:#0a5c3b;margin-bottom:10px">📱 الدفع عبر STC Pay</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:8px;padding:10px 14px;border:1px solid #d4e8db">
+        <span id="stcNumber" style="font-size:18px;font-weight:700;color:#061a10;letter-spacing:1px">05XXXXXXXX</span>
+        <button onclick="copyText('stcNumber','stcCopied')" style="background:#0a5c3b;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-family:Cairo,sans-serif;font-size:12px;font-weight:700;cursor:pointer">نسخ</button>
+      </div>
+      <div id="stcCopied" style="display:none;font-size:11px;color:#0a5c3b;margin-top:6px;text-align:center">✅ تم النسخ!</div>
+    </div>
+
+    <!-- IBAN -->
+    <div style="background:#f0f7f4;border:1.5px solid #c8e6d9;border-radius:12px;padding:16px 18px;margin-bottom:12px">
+      <div style="font-size:13px;font-weight:700;color:#0a5c3b;margin-bottom:10px">🏦 التحويل البنكي (IBAN)</div>
+      <div style="font-size:12px;color:#5a7a67;margin-bottom:6px">اسم صاحب الحساب: <strong style="color:#061a10">علي أبودهش</strong></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:8px;padding:10px 14px;border:1px solid #d4e8db">
+        <span id="ibanNumber" style="font-size:13px;font-weight:700;color:#061a10;letter-spacing:1px;direction:ltr">SA00 0000 0000 0000 0000 0000</span>
+        <button onclick="copyText('ibanNumber','ibanCopied')" style="background:#0a5c3b;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-family:Cairo,sans-serif;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;margin-right:8px">نسخ</button>
+      </div>
+      <div id="ibanCopied" style="display:none;font-size:11px;color:#0a5c3b;margin-top:6px;text-align:center">✅ تم النسخ!</div>
+    </div>
+
+    <!-- Instructions -->
+    <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:13px;color:#92400e;line-height:1.7">
+      بعد التحويل، أرسل صورة الإيشال على واتساب أو بالرد على إيميل التأكيد.<br>
+      سيُؤكَّد موعدك خلال ساعتين من استلام التحويل. 🕐
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <a id="whatsappPayBtn" href="#" target="_blank"
+         style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:#25d366;color:#fff;border-radius:10px;font-family:Cairo,sans-serif;font-size:14px;font-weight:700;text-decoration:none">
+        💬 أرسل الإيشال
+      </a>
+      <button onclick="confirmPaymentSent()"
+              style="padding:12px;background:#0a5c3b;color:#fff;border:none;border-radius:10px;font-family:Cairo,sans-serif;font-size:14px;font-weight:700;cursor:pointer">
+        ✅ أرسلت التحويل
+      </button>
+    </div>
+
+    <button onclick="document.getElementById('paymentModal').classList.remove('open')"
+            style="width:100%;margin-top:10px;padding:9px;background:transparent;border:1px solid #d4e8db;border-radius:8px;font-family:Cairo,sans-serif;font-size:13px;color:#5a7a67;cursor:pointer">
+      إغلاق
+    </button>
+  </div>
+</div>
+
 <!-- SUCCESS MODAL -->
 <div class="modal-overlay" id="successModal">
   <div class="modal">
     <div class="modal-icon">✅</div>
-    <h3>تم الحجز بنجاح!</h3>
-    <p>سيتواصل معك علي أبودهش خلال ساعتين لتأكيد الموعد وإرسال رابط الجلسة ومعلومات الدفع.</p>
+    <h3>تم استلام طلبك!</h3>
+    <p>وصلك إيميل تأكيد على بريدك الإلكتروني. أرسل إيشال التحويل على واتساب وسيُؤكَّد موعدك خلال ساعتين.</p>
     <button class="modal-close" onclick="document.getElementById('successModal').classList.remove('open')">حسناً، شكراً!</button>
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-function submitBooking(e) {
+<!-- ERROR MODAL -->
+<div class="modal-overlay" id="errorModal">
+  <div class="modal">
+    <div class="modal-icon">⚠️</div>
+    <h3>حدث خطأ</h3>
+    <p id="errorMsg">يرجى المحاولة مرة أخرى أو التواصل عبر واتساب.</p>
+    <button class="modal-close" style="background:#c0392b" onclick="document.getElementById('errorModal').classList.remove('open')">حسناً</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ⚙️  CONFIG — عدّل هذا القسم فقط
+══════════════════════════════════════════════ -->
+<script>
+const CONFIG = {
+  // EmailJS — من emailjs.com
+  EMAILJS_PUBLIC_KEY:      'YOUR_EMAILJS_PUBLIC_KEY',
+  EMAILJS_SERVICE_ID:      'YOUR_SERVICE_ID',
+  EMAILJS_TEMPLATE_OWNER:  'YOUR_TEMPLATE_ID',   // template يوصلك أنت
+  EMAILJS_TEMPLATE_CLIENT: 'YOUR_TEMPLATE_ID',   // template يوصل العميل
+
+  // معلوماتك
+  YOUR_EMAIL:    'your@gmail.com',    // إيميلك على Gmail
+  YOUR_WHATSAPP: '966500000000',      // رقمك بدون + (للواتساب)
+  YOUR_STC:      '0500000000',        // رقم STC Pay
+  YOUR_IBAN:     'SA00 0000 0000 0000 0000 0000', // رقم IBAN
+  YOUR_NAME:     'علي أبودهش',
+};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+emailjs.init(CONFIG.EMAILJS_PUBLIC_KEY);
+
+// ── ضخّ بيانات الدفع في الصفحة ────────────────────
+document.getElementById('stcNumber').textContent  = CONFIG.YOUR_STC;
+document.getElementById('ibanNumber').textContent = CONFIG.YOUR_IBAN;
+
+// ── مساعدات ────────────────────────────────────────
+function fmtDate(dt) {
+  if (!dt) return '—';
+  return new Date(dt).toLocaleString('ar-SA', { dateStyle:'full', timeStyle:'short' });
+}
+
+function copyText(elId, feedbackId) {
+  const text = document.getElementById(elId).textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const fb = document.getElementById(feedbackId);
+    fb.style.display = 'block';
+    setTimeout(() => fb.style.display = 'none', 2000);
+  });
+}
+
+function showError(msg) {
+  document.getElementById('errorMsg').textContent = msg;
+  document.getElementById('errorModal').classList.add('open');
+}
+
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+
+// ── جمع بيانات الفورم ──────────────────────────────
+function collectData(formId) {
+  if (formId === 'heroForm') {
+    return {
+      name:     document.getElementById('h_name').value.trim(),
+      phone:    document.getElementById('h_phone').value.trim(),
+      email:    '',
+      topic:    document.getElementById('h_topic').value,
+      datetime: document.getElementById('h_datetime').value,
+      package:  'استشارة واحدة',
+      amount:   150,
+      notes:    ''
+    };
+  }
+  const pkgEl = document.getElementById('m_package');
+  return {
+    name:     document.getElementById('m_name').value.trim(),
+    phone:    document.getElementById('m_phone').value.trim(),
+    email:    document.getElementById('m_email').value.trim(),
+    topic:    document.getElementById('m_topic').value,
+    datetime: document.getElementById('m_datetime').value,
+    package:  pkgEl.options[pkgEl.selectedIndex]?.text || '',
+    amount:   parseInt(pkgEl.value) || 150,
+    notes:    document.getElementById('m_notes').value.trim()
+  };
+}
+
+// ── الإرسال الرئيسي ────────────────────────────────
+async function submitBooking(e, formId) {
   e.preventDefault();
+  const data = collectData(formId);
+
+  if (formId === 'mainForm' && !data.email) {
+    showError('يرجى إدخال البريد الإلكتروني لاستلام تأكيد الحجز.'); return;
+  }
+
+  const btnId = formId === 'heroForm' ? 'heroSubmitBtn' : 'mainSubmitBtn';
+  const btn   = document.getElementById(btnId);
+  const origText = btn.textContent;
+  btn.disabled    = true;
+  btn.textContent = '⏳ جارٍ الإرسال...';
+
+  const params = {
+    client_name:  data.name,
+    client_phone: data.phone,
+    client_email: data.email || 'غير مدخل',
+    topic:        data.topic,
+    package:      data.package,
+    amount:       data.amount + ' ريال',
+    datetime:     fmtDate(data.datetime),
+    notes:        data.notes || '—',
+    stc_number:   CONFIG.YOUR_STC,
+    iban:         CONFIG.YOUR_IBAN,
+    owner_name:   CONFIG.YOUR_NAME,
+  };
+
+  try {
+    // 1️⃣ إشعار لك بالحجز الجديد
+    await emailjs.send(
+      CONFIG.EMAILJS_SERVICE_ID,
+      CONFIG.EMAILJS_TEMPLATE_OWNER,
+      { ...params, to_email: CONFIG.YOUR_EMAIL,
+        subject: `📅 حجز جديد — ${data.name} | ${data.topic} | ${data.amount} ريال` }
+    );
+
+    // 2️⃣ رد تلقائي للعميل بتفاصيل الدفع
+    if (data.email) {
+      await emailjs.send(
+        CONFIG.EMAILJS_SERVICE_ID,
+        CONFIG.EMAILJS_TEMPLATE_CLIENT,
+        { ...params, to_email: data.email,
+          subject: 'تأكيد استلام حجزك — علي أبودهش | تفاصيل الدفع' }
+      );
+    }
+
+    btn.disabled    = false;
+    btn.textContent = origText;
+
+    // 3️⃣ فتح نافذة الدفع
+    openPaymentModal(data);
+
+  } catch (err) {
+    console.error(err);
+    btn.disabled    = false;
+    btn.textContent = origText;
+    showError('تعذّر إرسال الإيميل. تحقق من إعداد EmailJS أو تواصل عبر واتساب.');
+  }
+}
+
+// ── نافذة الدفع اليدوي ────────────────────────────
+function openPaymentModal(data) {
+  document.getElementById('payModalTitle').textContent =
+    `ادفع ${data.amount} ريال — ${data.package}`;
+  document.getElementById('payModalDesc').textContent  =
+    `${data.name} · ${fmtDate(data.datetime)}`;
+
+  // رابط واتساب جاهز مع رسالة مسبقة
+  const msg = encodeURIComponent(
+    `السلام عليكم، أنا ${data.name}\n` +
+    `حجزت استشارة: ${data.topic}\n` +
+    `الباقة: ${data.package} — ${data.amount} ريال\n` +
+    `الموعد: ${fmtDate(data.datetime)}\n` +
+    `هذه صورة الإيشال 👇`
+  );
+  document.getElementById('whatsappPayBtn').href =
+    `https://wa.me/${CONFIG.YOUR_WHATSAPP}?text=${msg}`;
+
+  document.getElementById('paymentModal').classList.add('open');
+}
+
+function confirmPaymentSent() {
+  document.getElementById('paymentModal').classList.remove('open');
   document.getElementById('successModal').classList.add('open');
 }
-function toggleFaq(el) {
-  const item = el.parentElement;
-  item.classList.toggle('open');
-}
-// Set min datetime to now
+
+// ── تحديد الحد الأدنى للتاريخ ─────────────────────
 document.querySelectorAll('input[type="datetime-local"]').forEach(inp => {
-  const now = 
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  inp.min = now.toISOString().slice(0, 16);
+});
+</script>
+</body>
+</html>
